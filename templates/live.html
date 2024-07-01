@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Beca Stream</title>
+</head>
+
+<body>
+    <video id="hls-video" autoplay muted playsinline controls style="max-width: 100%; max-height: 100%;"></video>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const videoEl = document.querySelector('#hls-video')
+            const hlsUrl = 'http://{{server}}/stream/{{id}}/index.m3u8'
+
+            if (Hls.isSupported()) {
+                const hls = new Hls()
+                hls.loadSource(hlsUrl)
+                hls.attachMedia(videoEl)
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                videoEl.src = hlsUrl
+            }
+        })
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</body>
+
+</html>

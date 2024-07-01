@@ -1,0 +1,27 @@
+name: hls-stream
+services:
+  hls-stream:
+    command: [ "python", "src/hls-stream/api.py" ]
+    image: hls-stream:v0.1.0
+    build:
+      context: .
+      dockerfile: hls-stream/Dockerfile
+    container_name: hls-stream
+    working_dir: /app
+    env_file:
+      - ../.env
+    restart: unless-stopped
+    volumes:
+      - ../src/hls-stream:/app/src/hls-stream/
+      - ../metadata:/app/metadata/
+      - ../stream:/app/stream/
+      - ../templates:/app/templates/
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+
+    network_mode: "host"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+    tty: true
